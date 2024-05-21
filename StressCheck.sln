@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34902.65
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StressCheck", "StressCheck.csproj", "{E0157B19-DAFF-4A2E-B4BC-FA90182497CB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E0157B19-DAFF-4A2E-B4BC-FA90182497CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E0157B19-DAFF-4A2E-B4BC-FA90182497CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E0157B19-DAFF-4A2E-B4BC-FA90182497CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E0157B19-DAFF-4A2E-B4BC-FA90182497CB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {537E377B-DF4D-4CAA-9CB3-F5659EF60FB5}
+	EndGlobalSection
+EndGlobal
