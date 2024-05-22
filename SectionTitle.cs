@@ -25,9 +25,9 @@
         {
             using var sql = RDB.Connection.CreateCommand();
             sql.CommandText = @"SELECT T.TITLE, T.Q_CATEGORY, Q.Q_NO, Q.Q_TEXT, T.ANSWER_1, T.ANSWER_2, T.ANSWER_3, T.ANSWER_4
-                              FROM QUESTION_TITLE AS T
-                              LEFT JOIN QUESTION AS Q ON T.Q_CATEGORY = Q.Q_CATEGORY
-                              WHERE T.Q_CATEGORY = @Q_CATEGORY;";
+                                FROM QUESTION_TITLE AS T
+                                LEFT JOIN QUESTION AS Q ON T.Q_CATEGORY = Q.Q_CATEGORY
+                                WHERE T.Q_CATEGORY = @Q_CATEGORY;"; // PLACEHOLDER ----- NEED TO JOIN QUESTION_SUBTITLE AS WELL
             sql.Parameters.AddWithValue("@Q_CATEGORY", Viewport.currentQuestionCategory);
             using var reader = sql.ExecuteReader();
             if (reader.Read())

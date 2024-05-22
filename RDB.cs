@@ -18,13 +18,11 @@ namespace StressCheck
                 if (_connection == null)
                 {
 
-                    var connectionString = @"Data Source=localhost\SQLEXPRESS;"
-                                    + "Initial Catalog=stress_check;"
-                                    + "Persist Security Info=False;"
-                                    + "Integrated Security=SSPI;"
-                                    + "Encrypt=False;";
-
-
+                    var connectionString = @"Data Source=localhost\SQLEXPRESS;
+                                    Initial Catalog=stress_check;
+                                    Persist Security Info=False;
+                                    Integrated Security=SSPI;
+                                    Encrypt=False;";
                     try
                     {
                         _connection = new SqlConnection(connectionString);
