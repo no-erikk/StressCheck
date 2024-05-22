@@ -1,13 +1,4 @@
 ﻿using Microsoft.Data.SqlClient;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace StressCheck
 {
@@ -29,43 +20,79 @@ namespace StressCheck
         {
             ActiveControl = FrmEmpID;
         }
-
-        private void BtnUpdate_Click(object sender, EventArgs e)
+        
+        private void BtnUpdate_Click(object sender, EventArgs e) // ADJUST TO INSERT INTO LOGIN AND EMPLOYEE VIA TRANSACTION?
         {
-            using var sql = RDB.Connection.CreateCommand();
-            sql.CommandText = "UPDATE EMPLOYEE SET EMP_NAME = @EMP_NAME, GENDER = @GENDER WHERE EMP_ID = @EMP_ID";
-            sql.Parameters.AddWithValue("@EMP_NAME", FrmEmpName.Text);
-            if (RbtnGenderM.Checked)
-            {
-                sql.Parameters.AddWithValue("@GENDER", "M");
-            }
-            else
-            {
-                sql.Parameters.AddWithValue("@GENDER", "F");
-            }
-            sql.Parameters.AddWithValue("@EMP_ID", FrmEmpID.Text);
-
             try
             {
-                if (sql.ExecuteNonQuery() > 0)
+                using var sql = RDB.Connection.CreateCommand();
+                sql.CommandText = @"INSERT INTO EMPLOYEE
+                                VALUES(@EMP_ID, @EMP_PASSWD, @EMP_NAME, @GENDER);";
+                sql.Parameters.AddWithValue("@EMP_ID", FrmEmpID.Text);
+                sql.Parameters.AddWithValue("@EMP_PASSWD", FrmEmpPass.Text);
+                sql.Parameters.AddWithValue("@EMP_NAME", FrmEmpName.Text);
+                if (RbtnGenderM.Checked)
                 {
-                    MessageBox.Show("データを更新しました。", "更新成功");
+                    sql.Parameters.AddWithValue("@GENDER", "M");
                 }
                 else
                 {
-                    MessageBox.Show($"従業員 ID:{FrmEmpID}は登録されていません", "更新エラー");
+                    sql.Parameters.AddWithValue("@GENDER", "F");
+                }
 
+                try
+                {
+                    if (sql.ExecuteNonQuery() > 0)
+                    {
+                        MessageBox.Show("データを更新しました。", "更新成功");
+                        LoginAfterRegistration();
+                        NextScreen?.Invoke(this, EventArgs.Empty);
+                    }
+                    else
+                    {
+                        MessageBox.Show($"従業員 ID:{FrmEmpID.Text}は登録されていません", "更新エラー");
+
+                    }
+                }
+                catch (SqlException ex)
+                {
+                    RDB.ErrorMessage(ex);
                 }
             }
-            catch (SqlException ex)
+            catch (Exception ex)
             {
-                RDB.ErrorMessage(ex);
+                
             }
+            
         }
 
         private void BtnCancel_Click(object sender, EventArgs e)
         {
             PrevScreen?.Invoke(this, EventArgs.Empty);
+        }
+
+        private void LoginAfterRegistration()
+        {
+            using var sql = RDB.Connection.CreateCommand();
+            sql.CommandText = @"SELECT EMPLOYEE.EMP_NAME AS EMP_NAME, LOGIN.EMP_ID AS EMP_ID
+                                  FROM LOGIN 
+                                  LEFT JOIN EMPLOYEE ON LOGIN.EMP_ID = EMPLOYEE.EMP_ID
+                                  WHERE LOGIN.EMP_ID = @EMP_ID AND LOGIN.PASSWD = @PASSWD";
+            sql.Parameters.AddWithValue("@EMP_ID", FrmEmpID.Text);
+            sql.Parameters.AddWithValue("@PASSWD", FrmEmpPass.Text);
+
+            using var reader = sql.ExecuteReader();
+            if (reader.Read())
+            {
+                // set current user ID in viewport
+                Viewport.currentUser = (string)reader["EMP_ID"];
+                var userName = (string)reader["EMP_NAME"];
+                MessageBox.Show(userName + "としてログインしました。", "ログイン成功");
+            }
+            else
+            {
+                MessageBox.Show("従業員IDとパスワードを確認して下さい。", "エラー");
+            }
         }
     }
 }
