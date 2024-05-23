@@ -12,6 +12,7 @@
         {
             InitializeComponent();
             Viewport = viewport;
+            ActiveControl = FrmEmpID;
         }
 
         private void CheckLogin()
@@ -19,6 +20,7 @@
             try
             {
                 // use entered ID and password to check if valid, login if valid
+                // 入力されたIDとパスワードを使って有効かどうかをチェックし、有効ならログインする
                 using var sql = RDB.Connection.CreateCommand();
                 sql.CommandText = @"SELECT EMPLOYEE.EMP_NAME AS EMP_NAME, LOGIN.EMP_ID AS EMP_ID
                                   FROM LOGIN 
@@ -31,6 +33,7 @@
                 if (reader.Read())
                 {
                     // set current user ID in viewport
+                    // 現在のユーザーIDをビューポートに設定
                     Viewport.currentUser = (string)reader["EMP_ID"];
                     var userName = (string)reader["EMP_NAME"];
                     MessageBox.Show(userName + "としてログインしました。", "ログイン成功");
@@ -48,12 +51,19 @@
             }
         }
 
+        // run login check and move to next screen
+        // ログインチェックを実行し、次の画面に移動
         private void BtnLogin_Click(object sender, EventArgs e)
         {
             if (FrmEmpID.Text != "" && FrmEmpPass.Text != "")
             {
                 CheckLogin();
-                NextScreen?.Invoke(sender, EventArgs.Empty);
+                // check for active user, if found move to next screen
+                // 現在のユーザーを検索し、見つかったら次の画面に移動
+                if(Viewport.currentUser != null)
+                {
+                    NextScreen?.Invoke(sender, EventArgs.Empty);
+                }
             }
             else
             {
@@ -61,6 +71,8 @@
             }
         }
 
+        // go to NewUser page
+        // NewUserページに移動
         private void BtnNewUser_Click(object sender, EventArgs e)
         {
             NewUser?.Invoke(sender, EventArgs.Empty);

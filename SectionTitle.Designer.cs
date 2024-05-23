@@ -49,18 +49,18 @@
             TxtSectionTitle.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
             TxtSectionTitle.Location = new Point(110, 112);
             TxtSectionTitle.Name = "TxtSectionTitle";
-            TxtSectionTitle.Size = new Size(115, 48);
+            TxtSectionTitle.Size = new Size(205, 48);
             TxtSectionTitle.TabIndex = 1;
-            TxtSectionTitle.Text = "label1";
+            TxtSectionTitle.Text = "SectionTitle";
             // 
             // TxtNumOfQuestion
             // 
             TxtNumOfQuestion.AutoSize = true;
             TxtNumOfQuestion.Location = new Point(110, 213);
             TxtNumOfQuestion.Name = "TxtNumOfQuestion";
-            TxtNumOfQuestion.Size = new Size(59, 25);
+            TxtNumOfQuestion.Size = new Size(184, 25);
             TxtNumOfQuestion.TabIndex = 3;
-            TxtNumOfQuestion.Text = "label1";
+            TxtNumOfQuestion.Text = "Number of Questions";
             // 
             // SectionTitle
             // 

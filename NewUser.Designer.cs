@@ -47,7 +47,7 @@
             BtnCancel.Location = new Point(478, 343);
             BtnCancel.Name = "BtnCancel";
             BtnCancel.Size = new Size(112, 34);
-            BtnCancel.TabIndex = 15;
+            BtnCancel.TabIndex = 8;
             BtnCancel.Text = "キャンセル";
             BtnCancel.UseVisualStyleBackColor = true;
             BtnCancel.Click += BtnCancel_Click;
@@ -57,7 +57,7 @@
             BtnUpdate.Location = new Point(280, 343);
             BtnUpdate.Name = "BtnUpdate";
             BtnUpdate.Size = new Size(112, 34);
-            BtnUpdate.TabIndex = 14;
+            BtnUpdate.TabIndex = 7;
             BtnUpdate.Text = "更新";
             BtnUpdate.UseVisualStyleBackColor = true;
             BtnUpdate.Click += BtnUpdate_Click;
@@ -87,7 +87,7 @@
             groupBox1.Location = new Point(81, 225);
             groupBox1.Name = "groupBox1";
             groupBox1.Size = new Size(246, 94);
-            groupBox1.TabIndex = 11;
+            groupBox1.TabIndex = 4;
             groupBox1.TabStop = false;
             groupBox1.Text = "性別";
             // 
@@ -97,7 +97,7 @@
             RbtnGenderF.Location = new Point(141, 40);
             RbtnGenderF.Name = "RbtnGenderF";
             RbtnGenderF.Size = new Size(75, 29);
-            RbtnGenderF.TabIndex = 1;
+            RbtnGenderF.TabIndex = 6;
             RbtnGenderF.TabStop = true;
             RbtnGenderF.Text = "女性";
             RbtnGenderF.UseVisualStyleBackColor = true;
@@ -108,7 +108,7 @@
             RbtnGenderM.Location = new Point(36, 40);
             RbtnGenderM.Name = "RbtnGenderM";
             RbtnGenderM.Size = new Size(75, 29);
-            RbtnGenderM.TabIndex = 0;
+            RbtnGenderM.TabIndex = 5;
             RbtnGenderM.TabStop = true;
             RbtnGenderM.Text = "男性";
             RbtnGenderM.UseVisualStyleBackColor = true;
@@ -118,14 +118,14 @@
             FrmEmpName.Location = new Point(140, 188);
             FrmEmpName.Name = "FrmEmpName";
             FrmEmpName.Size = new Size(310, 31);
-            FrmEmpName.TabIndex = 10;
+            FrmEmpName.TabIndex = 3;
             // 
             // FrmEmpID
             // 
             FrmEmpID.Location = new Point(140, 93);
             FrmEmpID.Name = "FrmEmpID";
             FrmEmpID.Size = new Size(150, 31);
-            FrmEmpID.TabIndex = 8;
+            FrmEmpID.TabIndex = 1;
             // 
             // TxtEmpPass
             // 
@@ -141,7 +141,7 @@
             FrmEmpPass.Location = new Point(140, 142);
             FrmEmpPass.Name = "FrmEmpPass";
             FrmEmpPass.Size = new Size(150, 31);
-            FrmEmpPass.TabIndex = 16;
+            FrmEmpPass.TabIndex = 2;
             // 
             // NewUser
             // 

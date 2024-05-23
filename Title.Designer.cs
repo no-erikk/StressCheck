@@ -61,7 +61,7 @@
             BtnNewUser.Location = new Point(513, 320);
             BtnNewUser.Name = "BtnNewUser";
             BtnNewUser.Size = new Size(149, 34);
-            BtnNewUser.TabIndex = 37;
+            BtnNewUser.TabIndex = 4;
             BtnNewUser.Text = "新ユーザ登録";
             BtnNewUser.UseVisualStyleBackColor = true;
             BtnNewUser.Click += BtnNewUser_Click;
@@ -71,7 +71,7 @@
             BtnLogin.Location = new Point(209, 320);
             BtnLogin.Name = "BtnLogin";
             BtnLogin.Size = new Size(149, 34);
-            BtnLogin.TabIndex = 36;
+            BtnLogin.TabIndex = 3;
             BtnLogin.Text = "ログイン";
             BtnLogin.UseVisualStyleBackColor = true;
             BtnLogin.Click += BtnLogin_Click;
@@ -81,14 +81,14 @@
             FrmEmpPass.Location = new Point(487, 263);
             FrmEmpPass.Name = "FrmEmpPass";
             FrmEmpPass.Size = new Size(187, 31);
-            FrmEmpPass.TabIndex = 35;
+            FrmEmpPass.TabIndex = 2;
             // 
             // FrmEmpID
             // 
             FrmEmpID.Location = new Point(139, 263);
             FrmEmpID.Name = "FrmEmpID";
             FrmEmpID.Size = new Size(187, 31);
-            FrmEmpID.TabIndex = 34;
+            FrmEmpID.TabIndex = 1;
             // 
             // label2
             // 
