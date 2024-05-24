@@ -9,7 +9,10 @@ namespace StressCheck
 
         public string currentUser { get; set; }
         public string currentQuestionCategory { get; set; }
+        public string previousQuestionCategory { get; set; }
         public string currentYear { get; set; }
+        public int currentQuestion { get; set; } = 0;
+        public int lastQuestionNo { get; set; } // WIP
 
         public DataTable questions = new DataTable();
 
@@ -21,6 +24,9 @@ namespace StressCheck
         }
 
         /// -------------------- Event Handlers -------------------- ///
+
+        // event bus for screen navigation
+        // 画面の移動を通知するイベントバス
         private void ShowScreen(UserControl screen)
         {
             switch (screen)
@@ -41,6 +47,8 @@ namespace StressCheck
                     break;
                 case Question question:
                     question.NextScreen += Question_NextScreen;
+                    question.PrevScreen += Question_PrevScreen;
+                    question.ReturnToTitle += Question_ReturnToTitle;
                     question.Complete += Question_Complete;
                     break;
             }
@@ -54,11 +62,6 @@ namespace StressCheck
             // set current screen
             // 現在の画面を設定する
             currentScreen = screen;
-        }
-
-        private void SectionTitle_ReturnToTitle1(object? sender, EventArgs e)
-        {
-            throw new NotImplementedException();
         }
 
         // ---------- Title Page ---------- //
@@ -109,7 +112,12 @@ namespace StressCheck
                 ShowScreen(prevScreen);
             }
         }
-
+        // SectionTitle -> Title
+        private void SectionTitle_ReturnToTitle1(object? sender, EventArgs e)
+        {
+            screenHistory.Clear();
+            ShowScreen(new Title(this));
+        }
         // sectionTitle -> Title
         private void SectionTitle_ReturnToTitle(object? sender, EventArgs e)
         {
@@ -124,10 +132,25 @@ namespace StressCheck
             screenHistory.Push(currentScreen);
             ShowScreen(new SectionTitle(this));
         }
-
+        // Question -> Previous Screen
+        private void Question_PrevScreen(object? sender, EventArgs e)
+        {
+            if (screenHistory.Count > 0)
+            {
+                UserControl prevScreen = screenHistory.Pop();
+                ShowScreen(prevScreen);
+            }
+        }
+        // Question -> Title
+        private void Question_ReturnToTitle(object? sender, EventArgs e)
+        {
+            screenHistory.Clear();
+            ShowScreen(new Title(this));
+        }
         // Question -> Complete
         private void Question_Complete(object? sender, EventArgs e)
         {
+            screenHistory.Push(currentScreen);
             ShowScreen(new Complete());
         }
     }

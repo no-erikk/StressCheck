@@ -46,10 +46,16 @@ namespace StressCheck
                 {
                     // success
                     // 成功
+                    Viewport.currentUser = FrmEmpID.Text;
+                    NextScreen?.Invoke(this, EventArgs.Empty);
                     MessageBox.Show("データを更新しました。", "更新成功");
                     // run login procedure with new user information
                     // 新しいユーザーの情報を使ってログインする
-                    LoginAfterRegistration();
+                    //LoginAfterRegistration();
+
+                    // ensure connection is closed
+                    // 接続を閉じる
+                    //sql.Connection.Close();
                 }
                 else
                 {
@@ -91,6 +97,7 @@ namespace StressCheck
                 Viewport.currentUser = (string)reader["EMP_ID"];
                 var userName = (string)reader["EMP_NAME"];
                 MessageBox.Show(userName + "としてログインしました。", "ログイン成功");
+
                 // move to section title
                 // セクション名に移動
                 NextScreen?.Invoke(this, EventArgs.Empty);

@@ -34,6 +34,9 @@
             BtnAns2 = new Button();
             BtnAns3 = new Button();
             BtnAns4 = new Button();
+            BtnToTitle = new Button();
+            BtnBack = new Button();
+            BtnSkip_DEBUG = new Button();
             SuspendLayout();
             // 
             // TxtQuestion
@@ -98,10 +101,45 @@
             BtnAns4.UseVisualStyleBackColor = true;
             BtnAns4.Click += SubmitAnswer;
             // 
+            // BtnToTitle
+            // 
+            BtnToTitle.Font = new Font("Segoe UI", 8F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            BtnToTitle.Location = new Point(3, 421);
+            BtnToTitle.Name = "BtnToTitle";
+            BtnToTitle.Size = new Size(157, 26);
+            BtnToTitle.TabIndex = 6;
+            BtnToTitle.Text = "タイトル画面に戻る";
+            BtnToTitle.UseVisualStyleBackColor = true;
+            BtnToTitle.Click += BtnToTitle_Click;
+            // 
+            // BtnBack
+            // 
+            BtnBack.Font = new Font("Segoe UI", 8F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            BtnBack.Location = new Point(166, 421);
+            BtnBack.Name = "BtnBack";
+            BtnBack.Size = new Size(157, 26);
+            BtnBack.TabIndex = 7;
+            BtnBack.Text = "一つ前の画面に戻る";
+            BtnBack.UseVisualStyleBackColor = true;
+            BtnBack.Click += PrevQuestion_Click;
+            // 
+            // BtnSkip_DEBUG
+            // 
+            BtnSkip_DEBUG.Location = new Point(678, 3);
+            BtnSkip_DEBUG.Name = "BtnSkip_DEBUG";
+            BtnSkip_DEBUG.Size = new Size(119, 34);
+            BtnSkip_DEBUG.TabIndex = 8;
+            BtnSkip_DEBUG.Text = "Skip DEBUG";
+            BtnSkip_DEBUG.UseVisualStyleBackColor = true;
+            BtnSkip_DEBUG.Click += BtnSkip_DEBUG_Click;
+            // 
             // Question
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(BtnSkip_DEBUG);
+            Controls.Add(BtnBack);
+            Controls.Add(BtnToTitle);
             Controls.Add(BtnAns4);
             Controls.Add(BtnAns3);
             Controls.Add(BtnAns2);
@@ -122,5 +160,8 @@
         private Button BtnAns2;
         private Button BtnAns3;
         private Button BtnAns4;
+        private Button BtnToTitle;
+        private Button BtnBack;
+        private Button BtnSkip_DEBUG;
     }
 }

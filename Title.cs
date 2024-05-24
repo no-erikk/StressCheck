@@ -15,7 +15,7 @@
             ActiveControl = FrmEmpID;
         }
 
-        private void CheckLogin()
+        private void CheckLogin() // TO DO ---- add to query: check ID, Year against ANSWER table to see what the last question answered was
         {
             try
             {
@@ -23,20 +23,20 @@
                 // 入力されたIDとパスワードを使って有効かどうかをチェックし、有効ならログインする
                 using var sql = RDB.Connection.CreateCommand();
                 sql.CommandText = @"SELECT EMPLOYEE.EMP_NAME AS EMP_NAME, LOGIN.EMP_ID AS EMP_ID
-                                  FROM LOGIN 
-                                  LEFT JOIN EMPLOYEE ON LOGIN.EMP_ID = EMPLOYEE.EMP_ID
-                                  WHERE LOGIN.EMP_ID = @EMP_ID AND LOGIN.PASSWD = @PASSWD";
+                                    FROM LOGIN 
+                                    LEFT JOIN EMPLOYEE ON LOGIN.EMP_ID = EMPLOYEE.EMP_ID
+                                    WHERE LOGIN.EMP_ID = @EMP_ID AND LOGIN.PASSWD = @PASSWD;";
                 sql.Parameters.AddWithValue("@EMP_ID", FrmEmpID.Text);
                 sql.Parameters.AddWithValue("@PASSWD", FrmEmpPass.Text);
 
                 using var reader = sql.ExecuteReader();
                 if (reader.Read())
                 {
-                    // set current user ID in viewport
-                    // 現在のユーザーIDをビューポートに設定
-                    Viewport.currentUser = (string)reader["EMP_ID"];
-                    var userName = (string)reader["EMP_NAME"];
-                    MessageBox.Show(userName + "としてログインしました。", "ログイン成功");
+                        // set current user ID in viewport
+                        // 現在のユーザーIDをビューポートに設定
+                        Viewport.currentUser = (string)reader["EMP_ID"];
+                        var userName = (string)reader["EMP_NAME"];
+                        MessageBox.Show(userName + "としてログインしました。", "ログイン成功");
                 }
                 else
                 {

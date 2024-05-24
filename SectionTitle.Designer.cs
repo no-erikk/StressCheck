@@ -31,6 +31,8 @@
             BtnNextScreen = new Button();
             TxtSectionTitle = new Label();
             TxtNumOfQuestion = new Label();
+            BtnBack = new Button();
+            BtnToTitle = new Button();
             SuspendLayout();
             // 
             // BtnNextScreen
@@ -52,6 +54,7 @@
             TxtSectionTitle.Size = new Size(205, 48);
             TxtSectionTitle.TabIndex = 1;
             TxtSectionTitle.Text = "SectionTitle";
+            TxtSectionTitle.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // TxtNumOfQuestion
             // 
@@ -61,11 +64,36 @@
             TxtNumOfQuestion.Size = new Size(184, 25);
             TxtNumOfQuestion.TabIndex = 3;
             TxtNumOfQuestion.Text = "Number of Questions";
+            TxtNumOfQuestion.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // BtnBack
+            // 
+            BtnBack.Font = new Font("Segoe UI", 8F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            BtnBack.Location = new Point(166, 421);
+            BtnBack.Name = "BtnBack";
+            BtnBack.Size = new Size(157, 26);
+            BtnBack.TabIndex = 9;
+            BtnBack.Text = "一つ前の画面に戻る";
+            BtnBack.UseVisualStyleBackColor = true;
+            BtnBack.Click += BtnBack_Click;
+            // 
+            // BtnToTitle
+            // 
+            BtnToTitle.Font = new Font("Segoe UI", 8F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            BtnToTitle.Location = new Point(3, 421);
+            BtnToTitle.Name = "BtnToTitle";
+            BtnToTitle.Size = new Size(157, 26);
+            BtnToTitle.TabIndex = 8;
+            BtnToTitle.Text = "タイトル画面に戻る";
+            BtnToTitle.UseVisualStyleBackColor = true;
+            BtnToTitle.Click += BtnToTitle_Click;
             // 
             // SectionTitle
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(BtnBack);
+            Controls.Add(BtnToTitle);
             Controls.Add(TxtNumOfQuestion);
             Controls.Add(TxtSectionTitle);
             Controls.Add(BtnNextScreen);
@@ -80,5 +108,7 @@
         private Button BtnNextScreen;
         private Label TxtSectionTitle;
         private Label TxtNumOfQuestion;
+        private Button BtnBack;
+        private Button BtnToTitle;
     }
 }

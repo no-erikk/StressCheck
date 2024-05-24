@@ -6,10 +6,10 @@ namespace StressCheck
     public partial class Question : UserControl
     {
         public event EventHandler NextScreen;
+        public event EventHandler PrevScreen;
         public event EventHandler ReturnToTitle;
         public event EventHandler Complete;
 
-        private int currentQuestion = 0;
         private int selectedAnswer;
 
         private Viewport Viewport;
@@ -23,7 +23,7 @@ namespace StressCheck
 
         private void Question_Load(object sender, EventArgs e)
         {
-            GetQuestion(currentQuestion);
+            GetQuestion(Viewport.currentQuestion);
         }
 
         // get next question
@@ -41,29 +41,32 @@ namespace StressCheck
                 BtnAns3.Text = dataRow["ANSWER_3"].ToString();
                 BtnAns4.Text = dataRow["ANSWER_4"].ToString();
             }
-            else if (questionIndex == Viewport.questions.Rows.Count)
+            else if (questionIndex >= Viewport.questions.Rows.Count)
             {
                 // end of questions, determine next section and go
                 // 質問終了後、次のセクションを決めて進む
                 switch (Viewport.currentQuestionCategory)
                 {
                     case "A":
+                        Viewport.previousQuestionCategory = "A";
                         Viewport.currentQuestionCategory = "B";
-                        currentQuestion = 0;
+                        //Viewport.currentQuestion = 0;
                         // go to SectionTitle
                         // SectionTitleに移動
                         NextScreen?.Invoke(this, EventArgs.Empty);
                         break;
                     case "B":
+                        Viewport.previousQuestionCategory = "B";
                         Viewport.currentQuestionCategory = "C";
-                        currentQuestion = 0;
+                        //Viewport.currentQuestion = 0;
                         // go to SectionTitle
                         // SectionTitleに移動
                         NextScreen?.Invoke(this, EventArgs.Empty);
                         break;
                     case "C":
+                        Viewport.previousQuestionCategory = "C";
                         Viewport.currentQuestionCategory = "D";
-                        currentQuestion = 0;
+                        //Viewport.currentQuestion = 0;
                         // go to SectionTitle
                         // SectionTitleに移動
                         NextScreen?.Invoke(this, EventArgs.Empty);
@@ -114,7 +117,7 @@ namespace StressCheck
                 sql.Parameters.AddWithValue("@YEAR", "2025"); // PLACEHOLDER ---- NEED TO ADD YEAR LATER
                 sql.Parameters.AddWithValue("@EMP_ID", Viewport.currentUser);
                 sql.Parameters.AddWithValue("@Q_CATEGORY", Viewport.currentQuestionCategory);
-                sql.Parameters.AddWithValue("@Q_NO", currentQuestion);
+                sql.Parameters.AddWithValue("@Q_NO", Viewport.currentQuestion);
                 sql.Parameters.AddWithValue("@ANSWER", selectedAnswer);
                 sql.Parameters.AddWithValue(@"MOD_ANSWER", 1); // PLACEHOLDER ---- ADD LATER
                 sql.Parameters.AddWithValue(@"MON_ANSWER2", 1); // PLACEHOLDER ---- ADD LATER
@@ -123,8 +126,8 @@ namespace StressCheck
                 // 問題なく提出された場合、次の質問に移動
                 if (sql.ExecuteNonQuery() > 0)
                 {
-                    currentQuestion++;
-                    GetQuestion(currentQuestion);
+                    Viewport.currentQuestion++;
+                    GetQuestion(Viewport.currentQuestion);
 
                     // reset answer
                     // 回答をリセット
@@ -135,6 +138,58 @@ namespace StressCheck
             {
                 RDB.ErrorMessage(ex);
             }
+        }
+
+        // return to the previous question
+        // 前の質問に戻る
+        private void PrevQuestion_Click(object sender, EventArgs e)
+        {
+            if (Viewport.currentQuestion > 0)
+            {
+                Viewport.currentQuestion--;
+                GetQuestion(Viewport.currentQuestion);
+            }
+            // if it's the first question, return to previous screen
+            // 最初の質問なら、前の画面に戻る
+            else if (Viewport.currentQuestion == 0) // WIP
+            {
+                switch (Viewport.previousQuestionCategory)
+                {
+                    case "A":
+                        Viewport.currentQuestionCategory = "A";
+                        PrevScreen?.Invoke(sender, EventArgs.Empty);
+                        break;
+                    case "B":
+                        Viewport.currentQuestionCategory = "B";
+                        PrevScreen?.Invoke(sender, EventArgs.Empty);
+                        break;
+                    case "C":
+                        Viewport.currentQuestionCategory = "C";
+                        PrevScreen?.Invoke(sender, EventArgs.Empty);
+                        break;
+                    case "D":
+                        Viewport.currentQuestionCategory = "D";
+                        PrevScreen?.Invoke(sender, EventArgs.Empty);
+                        break;
+                    default:
+                        ReturnToTitle?.Invoke(sender, EventArgs.Empty);
+                        break;
+                }
+            }
+        }
+
+        // return to title screen
+        // タイトル画面に戻る
+        private void BtnToTitle_Click(object sender, EventArgs e)
+        {
+            ReturnToTitle?.Invoke(this, new EventArgs());
+        }
+
+        // DEBUG - skip question
+        private void BtnSkip_DEBUG_Click(object sender, EventArgs e)
+        {
+            Viewport.currentQuestion++;
+            GetQuestion(Viewport.currentQuestion);
         }
     }
 }
