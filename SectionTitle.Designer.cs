@@ -33,6 +33,7 @@
             TxtNumOfQuestion = new Label();
             BtnBack = new Button();
             BtnToTitle = new Button();
+            TxtSectionCategory = new Label();
             SuspendLayout();
             // 
             // BtnNextScreen
@@ -69,7 +70,7 @@
             // BtnBack
             // 
             BtnBack.Font = new Font("Segoe UI", 8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            BtnBack.Location = new Point(166, 421);
+            BtnBack.Location = new Point(169, 451);
             BtnBack.Name = "BtnBack";
             BtnBack.Size = new Size(157, 26);
             BtnBack.TabIndex = 9;
@@ -80,7 +81,7 @@
             // BtnToTitle
             // 
             BtnToTitle.Font = new Font("Segoe UI", 8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            BtnToTitle.Location = new Point(3, 421);
+            BtnToTitle.Location = new Point(6, 451);
             BtnToTitle.Name = "BtnToTitle";
             BtnToTitle.Size = new Size(157, 26);
             BtnToTitle.TabIndex = 8;
@@ -88,17 +89,28 @@
             BtnToTitle.UseVisualStyleBackColor = true;
             BtnToTitle.Click += BtnToTitle_Click;
             // 
+            // TxtSectionCategory
+            // 
+            TxtSectionCategory.AutoSize = true;
+            TxtSectionCategory.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            TxtSectionCategory.Location = new Point(110, 80);
+            TxtSectionCategory.Name = "TxtSectionCategory";
+            TxtSectionCategory.Size = new Size(196, 32);
+            TxtSectionCategory.TabIndex = 11;
+            TxtSectionCategory.Text = "Section Category";
+            // 
             // SectionTitle
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(TxtSectionCategory);
             Controls.Add(BtnBack);
             Controls.Add(BtnToTitle);
             Controls.Add(TxtNumOfQuestion);
             Controls.Add(TxtSectionTitle);
             Controls.Add(BtnNextScreen);
             Name = "SectionTitle";
-            Size = new Size(800, 450);
+            Size = new Size(900, 480);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -110,5 +122,6 @@
         private Label TxtNumOfQuestion;
         private Button BtnBack;
         private Button BtnToTitle;
+        private Label TxtSectionCategory;
     }
 }

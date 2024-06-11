@@ -6,7 +6,7 @@
         public event EventHandler NextScreen;
         public event EventHandler NewUser;
 
-        private Viewport Viewport;
+        private readonly Viewport Viewport;
 
         public Title(Viewport viewport)
         {
@@ -32,11 +32,16 @@
                 using var reader = sql.ExecuteReader();
                 if (reader.Read())
                 {
-                        // set current user ID in viewport
-                        // 現在のユーザーIDをビューポートに設定
-                        Viewport.currentUser = (string)reader["EMP_ID"];
-                        var userName = (string)reader["EMP_NAME"];
-                        MessageBox.Show(userName + "としてログインしました。", "ログイン成功");
+                    // set current user ID in viewport
+                    // 現在のユーザーIDをビューポートに設定
+                    Viewport.CurrentUser = (string)reader["EMP_ID"];
+                    var userName = (string)reader["EMP_NAME"];
+
+                    // set current year in viewport
+                    // 現在の年をビューポートに設定
+                    Viewport.CurrentYear = DateTime.Now.Year.ToString();
+
+                    MessageBox.Show(userName + "としてログインしました。", "ログイン成功");
                 }
                 else
                 {
@@ -60,7 +65,7 @@
                 CheckLogin();
                 // check for active user, if found move to next screen
                 // 現在のユーザーを検索し、見つかったら次の画面に移動
-                if(Viewport.currentUser != null)
+                if(Viewport.CurrentUser != null)
                 {
                     NextScreen?.Invoke(sender, EventArgs.Empty);
                 }

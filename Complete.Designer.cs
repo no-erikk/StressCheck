@@ -37,7 +37,7 @@
             // 
             TxtCompleteMsg.AutoSize = true;
             TxtCompleteMsg.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            TxtCompleteMsg.Location = new Point(126, 104);
+            TxtCompleteMsg.Location = new Point(126, 159);
             TxtCompleteMsg.Name = "TxtCompleteMsg";
             TxtCompleteMsg.Size = new Size(432, 48);
             TxtCompleteMsg.TabIndex = 0;
@@ -46,7 +46,7 @@
             // TxtCompleteSubtitle
             // 
             TxtCompleteSubtitle.AutoSize = true;
-            TxtCompleteSubtitle.Location = new Point(126, 168);
+            TxtCompleteSubtitle.Location = new Point(126, 223);
             TxtCompleteSubtitle.Name = "TxtCompleteSubtitle";
             TxtCompleteSubtitle.Size = new Size(370, 25);
             TxtCompleteSubtitle.TabIndex = 1;
@@ -54,12 +54,13 @@
             // 
             // BtnViewResult
             // 
-            BtnViewResult.Location = new Point(126, 248);
+            BtnViewResult.Location = new Point(126, 373);
             BtnViewResult.Name = "BtnViewResult";
             BtnViewResult.Size = new Size(112, 34);
             BtnViewResult.TabIndex = 2;
             BtnViewResult.Text = "結果へ";
             BtnViewResult.UseVisualStyleBackColor = true;
+            BtnViewResult.Click += BtnViewResult_Click;
             // 
             // Complete
             // 
@@ -69,7 +70,7 @@
             Controls.Add(TxtCompleteSubtitle);
             Controls.Add(TxtCompleteMsg);
             Name = "Complete";
-            Size = new Size(800, 450);
+            Size = new Size(900, 480);
             ResumeLayout(false);
             PerformLayout();
         }

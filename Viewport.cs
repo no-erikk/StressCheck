@@ -4,22 +4,24 @@ namespace StressCheck
 {
     public partial class Viewport : Form
     {
-        private Stack<UserControl> screenHistory = new Stack<UserControl>();
+        private readonly Stack<UserControl> screenHistory = new();
         private UserControl currentScreen;
 
-        public string currentUser { get; set; }
-        public string currentQuestionCategory { get; set; }
-        public string previousQuestionCategory { get; set; }
-        public string currentYear { get; set; }
-        public int currentQuestion { get; set; } = 0;
-        public int lastQuestionNo { get; set; } // WIP
+        public string CurrentUser { get; set; }
+        public string CurrentQuestionCategory { get; set; }
+        public string PreviousQuestionCategory { get; set; }
+        public string CurrentCategoryTitle { get; set; }
+        public string PreviousCategoryTitle { get; set; }
 
-        public DataTable questions = new DataTable();
+        public string CurrentYear { get; set; }
+        public int CurrentQuestion { get; set; } = 0;
+
+        public DataTable questions = new();
 
         public Viewport()
         {
             InitializeComponent();
-            currentQuestionCategory = "A";
+            CurrentQuestionCategory = "A";
             ShowScreen(new Title(this));
         }
 
@@ -40,9 +42,8 @@ namespace StressCheck
                     newUser.PrevScreen += NewUser_Title;
                     break;
                 case SectionTitle sectionTitle:
-                    sectionTitle.NextScreen += SectionTitle_NextScreen;
-                    sectionTitle.PrevScreen += SectionTitle_PrevScreen;
-
+                    sectionTitle.NextQuestion += SectionTitle_NextQuestion;
+                    sectionTitle.PrevQuestion += SectionTitle_PrevQuestion;
                     sectionTitle.ReturnToTitle += SectionTitle_ReturnToTitle;
                     break;
                 case Question question:
@@ -50,6 +51,9 @@ namespace StressCheck
                     question.PrevScreen += Question_PrevScreen;
                     question.ReturnToTitle += Question_ReturnToTitle;
                     question.Complete += Question_Complete;
+                    break;
+                case Complete complete:
+                    complete.NextScreen += Complete_NextScreen;
                     break;
             }
 
@@ -98,25 +102,22 @@ namespace StressCheck
 
         // ---------- Section Title Page ---------- //
         // SectionTitle -> Questions
-        private void SectionTitle_NextScreen(object? sender, EventArgs e)
+        private void SectionTitle_NextQuestion(object? sender, EventArgs e)
         {
             screenHistory.Push(currentScreen);
             ShowScreen(new Question(this));
         }
         // SectionTitle -> Previous Screen
-        private void SectionTitle_PrevScreen(object? sender, EventArgs e)
+        private void SectionTitle_PrevQuestion(object? sender, EventArgs e)
         {
             if (screenHistory.Count > 0)
             {
-                UserControl prevScreen = screenHistory.Pop();
-                ShowScreen(prevScreen);
+                if (screenHistory.Peek() is Question)
+                {
+                    UserControl prevScreen = screenHistory.Pop();
+                    ShowScreen(prevScreen);
+                }
             }
-        }
-        // SectionTitle -> Title
-        private void SectionTitle_ReturnToTitle1(object? sender, EventArgs e)
-        {
-            screenHistory.Clear();
-            ShowScreen(new Title(this));
         }
         // sectionTitle -> Title
         private void SectionTitle_ReturnToTitle(object? sender, EventArgs e)
@@ -137,8 +138,11 @@ namespace StressCheck
         {
             if (screenHistory.Count > 0)
             {
-                UserControl prevScreen = screenHistory.Pop();
-                ShowScreen(prevScreen);
+                if(screenHistory.Peek() is SectionTitle)
+                {
+                    UserControl prevScreen = screenHistory.Pop();
+                    ShowScreen(prevScreen);
+                }
             }
         }
         // Question -> Title
@@ -153,5 +157,12 @@ namespace StressCheck
             screenHistory.Push(currentScreen);
             ShowScreen(new Complete());
         }
-    }
+
+        // ---------- Completion Page ---------- //
+        private void Complete_NextScreen(object? sender, EventArgs e)
+        {
+            screenHistory.Push(currentScreen);
+            ShowScreen(new Result(this));
+        }
+    } 
 }

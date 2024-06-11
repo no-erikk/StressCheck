@@ -80,6 +80,7 @@
             // 
             FrmEmpPass.Location = new Point(487, 263);
             FrmEmpPass.Name = "FrmEmpPass";
+            FrmEmpPass.PasswordChar = '*';
             FrmEmpPass.Size = new Size(187, 31);
             FrmEmpPass.TabIndex = 2;
             // 
@@ -93,7 +94,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(162, 106);
+            label2.Location = new Point(209, 160);
             label2.Name = "label2";
             label2.Size = new Size(358, 25);
             label2.TabIndex = 33;
@@ -102,9 +103,10 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(155, 61);
+            label1.Font = new Font("Segoe UI", 16F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label1.Location = new Point(209, 115);
             label1.Name = "label1";
-            label1.Size = new Size(119, 25);
+            label1.Size = new Size(206, 45);
             label1.TabIndex = 32;
             label1.Text = "ストレスチェック";
             // 
@@ -121,7 +123,7 @@
             Controls.Add(label2);
             Controls.Add(label1);
             Name = "Title";
-            Size = new Size(800, 450);
+            Size = new Size(900, 480);
             ResumeLayout(false);
             PerformLayout();
         }

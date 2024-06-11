@@ -44,7 +44,7 @@
             // 
             // BtnCancel
             // 
-            BtnCancel.Location = new Point(478, 343);
+            BtnCancel.Location = new Point(486, 371);
             BtnCancel.Name = "BtnCancel";
             BtnCancel.Size = new Size(112, 34);
             BtnCancel.TabIndex = 8;
@@ -54,7 +54,7 @@
             // 
             // BtnUpdate
             // 
-            BtnUpdate.Location = new Point(280, 343);
+            BtnUpdate.Location = new Point(288, 371);
             BtnUpdate.Name = "BtnUpdate";
             BtnUpdate.Size = new Size(112, 34);
             BtnUpdate.TabIndex = 7;
@@ -65,7 +65,7 @@
             // emp_name
             // 
             emp_name.AutoSize = true;
-            emp_name.Location = new Point(84, 191);
+            emp_name.Location = new Point(169, 206);
             emp_name.Name = "emp_name";
             emp_name.Size = new Size(50, 25);
             emp_name.TabIndex = 13;
@@ -74,7 +74,7 @@
             // emp_id
             // 
             emp_id.AutoSize = true;
-            emp_id.Location = new Point(47, 96);
+            emp_id.Location = new Point(132, 111);
             emp_id.Name = "emp_id";
             emp_id.Size = new Size(87, 25);
             emp_id.TabIndex = 12;
@@ -84,9 +84,9 @@
             // 
             groupBox1.Controls.Add(RbtnGenderF);
             groupBox1.Controls.Add(RbtnGenderM);
-            groupBox1.Location = new Point(81, 225);
+            groupBox1.Location = new Point(169, 250);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(246, 94);
+            groupBox1.Size = new Size(248, 95);
             groupBox1.TabIndex = 4;
             groupBox1.TabStop = false;
             groupBox1.Text = "性別";
@@ -115,22 +115,22 @@
             // 
             // FrmEmpName
             // 
-            FrmEmpName.Location = new Point(140, 188);
+            FrmEmpName.Location = new Point(225, 203);
             FrmEmpName.Name = "FrmEmpName";
-            FrmEmpName.Size = new Size(310, 31);
+            FrmEmpName.Size = new Size(312, 31);
             FrmEmpName.TabIndex = 3;
             // 
             // FrmEmpID
             // 
-            FrmEmpID.Location = new Point(140, 93);
+            FrmEmpID.Location = new Point(225, 108);
             FrmEmpID.Name = "FrmEmpID";
-            FrmEmpID.Size = new Size(150, 31);
+            FrmEmpID.Size = new Size(152, 31);
             FrmEmpID.TabIndex = 1;
             // 
             // TxtEmpPass
             // 
             TxtEmpPass.AutoSize = true;
-            TxtEmpPass.Location = new Point(47, 145);
+            TxtEmpPass.Location = new Point(132, 160);
             TxtEmpPass.Name = "TxtEmpPass";
             TxtEmpPass.Size = new Size(86, 25);
             TxtEmpPass.TabIndex = 17;
@@ -138,9 +138,9 @@
             // 
             // FrmEmpPass
             // 
-            FrmEmpPass.Location = new Point(140, 142);
+            FrmEmpPass.Location = new Point(225, 157);
             FrmEmpPass.Name = "FrmEmpPass";
-            FrmEmpPass.Size = new Size(150, 31);
+            FrmEmpPass.Size = new Size(152, 31);
             FrmEmpPass.TabIndex = 2;
             // 
             // NewUser
@@ -157,7 +157,7 @@
             Controls.Add(FrmEmpName);
             Controls.Add(FrmEmpID);
             Name = "NewUser";
-            Size = new Size(800, 450);
+            Size = new Size(900, 480);
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
             ResumeLayout(false);

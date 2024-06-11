@@ -7,7 +7,7 @@ namespace StressCheck
         public event EventHandler NextScreen;
         public event EventHandler PrevScreen;
 
-        private Viewport Viewport;
+        private readonly Viewport Viewport;
 
         public NewUser(Viewport viewport)
         {
@@ -20,12 +20,26 @@ namespace StressCheck
         // 新しいユーザーをデータベースに挿入する
         private void BtnUpdate_Click(object sender, EventArgs e)
         {
-            using var sql = RDB.Connection.CreateCommand(); // NEED HANDLING OF DUPES IN DB, PREFERRABLY UPDATE IF A VALUE EXISTS OR INSERT IF NOT
-            sql.CommandText = @"INSERT INTO EMPLOYEE 
-                                    VALUES (@EMP_ID, @EMP_NAME, @GENDER);
+            // insert new user into database or update if already exists
+            // 新しいユーザーをデータベースに挿入する。またはユーザーが既に存在する場合は更新する
+            using var sql = RDB.Connection.CreateCommand();
+            sql.CommandText = @"MERGE INTO EMPLOYEE AS TARGET
+                                USING (VALUES (@EMP_ID, @EMP_NAME, @GENDER)) AS SOURCE (EMP_ID, EMP_NAME, GENDER)
+                                ON TARGET.EMP_ID = SOURCE.EMP_ID
+                                WHEN MATCHED THEN
+	                                UPDATE SET TARGET.EMP_NAME = @EMP_NAME, TARGET.GENDER = @GENDER
+                                WHEN NOT MATCHED THEN
+	                                INSERT (EMP_ID, EMP_NAME, GENDER)
+	                                VALUES (SOURCE.EMP_ID, SOURCE.EMP_NAME, SOURCE.GENDER);
                                     
-                                    INSERT INTO LOGIN 
-                                    VALUES (@EMP_ID, @EMP_PASSWD)";
+                                MERGE INTO LOGIN AS TARGET
+                                USING (VALUES (@EMP_ID, @EMP_PASSWD)) AS SOURCE (EMP_ID, EMP_PASSWD)
+                                ON TARGET.EMP_ID = SOURCE.EMP_ID
+                                WHEN MATCHED THEN
+                                    UPDATE SET TARGET.EMP_PASSWD = @EMP_PASSWD
+                                WHEN NOT MATCHED THEN
+                                    INSERT (EMP_ID, EMP_PASSWD)
+                                    VALUES (SOURCE.EMP_ID, SOURCE.EMP_PASSWD);";
             sql.Parameters.AddWithValue("@EMP_ID", FrmEmpID.Text);
             sql.Parameters.AddWithValue("@EMP_PASSWD", FrmEmpPass.Text);
             sql.Parameters.AddWithValue("@EMP_NAME", FrmEmpName.Text);
@@ -46,12 +60,12 @@ namespace StressCheck
                 {
                     // success
                     // 成功
-                    Viewport.currentUser = FrmEmpID.Text;
+                    Viewport.CurrentUser = FrmEmpID.Text;
                     NextScreen?.Invoke(this, EventArgs.Empty);
                     MessageBox.Show("データを更新しました。", "更新成功");
                     // run login procedure with new user information
                     // 新しいユーザーの情報を使ってログインする
-                    //LoginAfterRegistration();
+                    LoginAfterRegistration();
 
                     // ensure connection is closed
                     // 接続を閉じる
@@ -94,7 +108,7 @@ namespace StressCheck
             {
                 // set current user ID in viewport
                 // 現在のユーザーIDをビューポートに設定
-                Viewport.currentUser = (string)reader["EMP_ID"];
+                Viewport.CurrentUser = (string)reader["EMP_ID"];
                 var userName = (string)reader["EMP_NAME"];
                 MessageBox.Show(userName + "としてログインしました。", "ログイン成功");
 

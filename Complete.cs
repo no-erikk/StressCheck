@@ -12,9 +12,16 @@ namespace StressCheck
 {
     public partial class Complete : UserControl
     {
+        public event EventHandler NextScreen;
+
         public Complete()
         {
             InitializeComponent();
+        }
+
+        private void BtnViewResult_Click(object sender, EventArgs e)
+        {
+            NextScreen?.Invoke(this, EventArgs.Empty);
         }
     }
 }

@@ -1,13 +1,13 @@
 ﻿namespace StressCheck
 {
-    partial class Viewport
+    partial class Result
     {
-        /// <summary>
+        /// <summary> 
         /// Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
+        /// <summary> 
         /// Clean up any resources being used.
         /// </summary>
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
@@ -20,39 +20,39 @@
             base.Dispose(disposing);
         }
 
-        #region Windows Form Designer generated code
+        #region Component Designer generated code
 
-        /// <summary>
-        /// Required method for Designer support - do not modify
+        /// <summary> 
+        /// Required method for Designer support - do not modify 
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent()
         {
-            MainContent = new Panel();
+            TxtStressLevel = new Label();
             SuspendLayout();
             // 
-            // MainContent
+            // TxtStressLevel
             // 
-            MainContent.Dock = DockStyle.Fill;
-            MainContent.Location = new Point(0, 0);
-            MainContent.Name = "MainContent";
-            MainContent.Size = new Size(900, 480);
-            MainContent.TabIndex = 8;
+            TxtStressLevel.AutoSize = true;
+            TxtStressLevel.Location = new Point(408, 195);
+            TxtStressLevel.Name = "TxtStressLevel";
+            TxtStressLevel.Size = new Size(102, 25);
+            TxtStressLevel.TabIndex = 0;
+            TxtStressLevel.Text = "Stress Level";
             // 
-            // Viewport
+            // Result
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(900, 480);
-            Controls.Add(MainContent);
-            Name = "Viewport";
-            StartPosition = FormStartPosition.CenterScreen;
-            Text = "ストレスチェック";
+            Controls.Add(TxtStressLevel);
+            Name = "Result";
+            Size = new Size(900, 480);
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
 
-        private Panel MainContent;
+        private Label TxtStressLevel;
     }
 }
