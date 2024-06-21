@@ -34,6 +34,7 @@
             BtnBack = new Button();
             BtnToTitle = new Button();
             TxtSectionCategory = new Label();
+            button1 = new Button();
             SuspendLayout();
             // 
             // BtnNextScreen
@@ -99,10 +100,21 @@
             TxtSectionCategory.TabIndex = 11;
             TxtSectionCategory.Text = "Section Category";
             // 
+            // button1
+            // 
+            button1.Location = new Point(694, 443);
+            button1.Name = "button1";
+            button1.Size = new Size(203, 34);
+            button1.TabIndex = 12;
+            button1.Text = "DEBUG - RESULT PAGE";
+            button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
+            // 
             // SectionTitle
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(button1);
             Controls.Add(TxtSectionCategory);
             Controls.Add(BtnBack);
             Controls.Add(BtnToTitle);
@@ -123,5 +135,6 @@
         private Button BtnBack;
         private Button BtnToTitle;
         private Label TxtSectionCategory;
+        private Button button1;
     }
 }

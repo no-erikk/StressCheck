@@ -33,13 +33,13 @@ namespace StressCheck
 	                                VALUES (SOURCE.EMP_ID, SOURCE.EMP_NAME, SOURCE.GENDER);
                                     
                                 MERGE INTO LOGIN AS TARGET
-                                USING (VALUES (@EMP_ID, @EMP_PASSWD)) AS SOURCE (EMP_ID, EMP_PASSWD)
+                                USING (VALUES (@EMP_ID, @EMP_PASSWD)) AS SOURCE (EMP_ID, PASSWD)
                                 ON TARGET.EMP_ID = SOURCE.EMP_ID
                                 WHEN MATCHED THEN
-                                    UPDATE SET TARGET.EMP_PASSWD = @EMP_PASSWD
+                                    UPDATE SET TARGET.PASSWD = @EMP_PASSWD
                                 WHEN NOT MATCHED THEN
-                                    INSERT (EMP_ID, EMP_PASSWD)
-                                    VALUES (SOURCE.EMP_ID, SOURCE.EMP_PASSWD);";
+                                    INSERT (EMP_ID, PASSWD)
+                                    VALUES (SOURCE.EMP_ID, SOURCE.PASSWD);";
             sql.Parameters.AddWithValue("@EMP_ID", FrmEmpID.Text);
             sql.Parameters.AddWithValue("@EMP_PASSWD", FrmEmpPass.Text);
             sql.Parameters.AddWithValue("@EMP_NAME", FrmEmpName.Text);
@@ -60,16 +60,12 @@ namespace StressCheck
                 {
                     // success
                     // 成功
-                    Viewport.CurrentUser = FrmEmpID.Text;
+                    Viewport.CurrentUserID = FrmEmpID.Text;
                     NextScreen?.Invoke(this, EventArgs.Empty);
-                    MessageBox.Show("データを更新しました。", "更新成功");
+                    MessageBox.Show($"従業員 ID:{FrmEmpID.Text}は登録しました。", "更新成功");
                     // run login procedure with new user information
                     // 新しいユーザーの情報を使ってログインする
                     LoginAfterRegistration();
-
-                    // ensure connection is closed
-                    // 接続を閉じる
-                    //sql.Connection.Close();
                 }
                 else
                 {
@@ -81,7 +77,6 @@ namespace StressCheck
             {
                 RDB.ErrorMessage(ex);
             }
-
         }
 
         // cancel new user registration and return to login page
@@ -104,22 +99,37 @@ namespace StressCheck
             sql.Parameters.AddWithValue("@PASSWD", FrmEmpPass.Text);
 
             using var reader = sql.ExecuteReader();
-            if (reader.Read())
+            if (reader.HasRows)
             {
-                // set current user ID in viewport
-                // 現在のユーザーIDをビューポートに設定
-                Viewport.CurrentUser = (string)reader["EMP_ID"];
-                var userName = (string)reader["EMP_NAME"];
-                MessageBox.Show(userName + "としてログインしました。", "ログイン成功");
-
-                // move to section title
-                // セクション名に移動
-                NextScreen?.Invoke(this, EventArgs.Empty);
+                if (reader.Read())
+                {
+                    // set current user info in viewport
+                    // 現在のユーザー情報をビューポートに設定
+                    Viewport.CurrentUserID = (string)reader["EMP_ID"];
+                    Viewport.CurrentUserName = (string)reader["EMP_NAME"];
+                    MessageBox.Show(Viewport.CurrentUserName + "としてログインしました。", "ログイン成功");
+                }
+                
             }
             else
             {
                 MessageBox.Show("従業員IDとパスワードを確認して下さい。", "エラー");
             }
+
+            // ensure connection is closed
+            // 接続を閉じる
+            reader.Close();
+            sql.Dispose();
+
+            // run login check and move to next screen
+            // ログインチェックを実行し、次の画面に移動
+            if (Viewport.CurrentUserID != null)
+            {
+                // move to section title
+                // セクション名に移動
+                NextScreen?.Invoke(this, EventArgs.Empty);
+            }
+
         }
     }
 }

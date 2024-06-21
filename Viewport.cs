@@ -7,7 +7,10 @@ namespace StressCheck
         private readonly Stack<UserControl> screenHistory = new();
         private UserControl currentScreen;
 
-        public string CurrentUser { get; set; }
+        public string CurrentUserID { get; set; }
+        public string CurrentUserName { get; set; }
+        public string CurrentUserGender { get; set; }
+
         public string CurrentQuestionCategory { get; set; }
         public string PreviousQuestionCategory { get; set; }
         public string CurrentCategoryTitle { get; set; }
@@ -45,6 +48,7 @@ namespace StressCheck
                     sectionTitle.NextQuestion += SectionTitle_NextQuestion;
                     sectionTitle.PrevQuestion += SectionTitle_PrevQuestion;
                     sectionTitle.ReturnToTitle += SectionTitle_ReturnToTitle;
+                    sectionTitle.DEBUGGoToResults += SectionTitle_DEBUGGoToResults;
                     break;
                 case Question question:
                     question.NextScreen += Question_NextScreen;
@@ -124,6 +128,11 @@ namespace StressCheck
         {
             screenHistory.Clear();
             ShowScreen(new Title(this));
+        }
+        // DEBUG -- SKIP TO RESULT PAGE
+        private void SectionTitle_DEBUGGoToResults(object? sender, EventArgs e)
+        {
+            ShowScreen(new Result(this));
         }
 
         // ---------- Question Page ---------- //

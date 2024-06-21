@@ -45,6 +45,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(900, 480);
             Controls.Add(MainContent);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
             Name = "Viewport";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "ストレスチェック";

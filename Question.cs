@@ -12,6 +12,7 @@ namespace StressCheck
 
         private int selectedAnswer;
         private int modAnswer;
+        private int modAnswer2;
 
         private readonly Viewport Viewport;
 
@@ -27,7 +28,7 @@ namespace StressCheck
             GetQuestion(Viewport.CurrentQuestion);
             PrgQuestions.Maximum = Viewport.questions.Rows.Count;
         }
-        
+
         // get next question
         // 次の質問を取得
         private void GetQuestion(int questionIndex)
@@ -103,50 +104,40 @@ namespace StressCheck
             {
                 // determine which button was selected and assign answer
                 // 選択されたボタンを取得し、解答を割り当てる
-                if (Viewport.questions.Rows[0]["REV"].Equals(true))
+                switch (btn.Name)
                 {
-                    switch (btn.Name)
-                    {
-                        case "BtnAns1":
-                            selectedAnswer = 1;
-                            modAnswer = 4;
-                            break;
-                        case "BtnAns2":
-                            selectedAnswer = 2;
-                            modAnswer = 3;
-                            break;
-                        case "BtnAns3":
-                            selectedAnswer = 3;
-                            modAnswer = 2;
-                            break;
-                        case "BtnAns4":
-                            selectedAnswer = 4;
-                            modAnswer = 1;
-                            break;
-                    }
+                    case "BtnAns1":
+                        selectedAnswer = 1;
+                        break;
+                    case "BtnAns2":
+                        selectedAnswer = 2;
+                        break;
+                    case "BtnAns3":
+                        selectedAnswer = 3;
+                        break;
+                    case "BtnAns4":
+                        selectedAnswer = 4;
+                        break;
+                }
+
+                // check REV and REV_2 and assign modAnswer and modAnswer2
+                // REVとREV_2をチェックし、modAnswerとmodAnswer2に割り当てる
+                if (Viewport.questions.Rows[Viewport.CurrentQuestion]["REV"].Equals(true))
+                {
+                    modAnswer = 5 - selectedAnswer;
+                    modAnswer2 = selectedAnswer;
+                }
+                else if (Viewport.questions.Rows[Viewport.CurrentQuestion]["REV_2"].Equals(true))
+                {
+                    modAnswer = selectedAnswer;
+                    modAnswer2 = 5 - selectedAnswer;
                 }
                 else
                 {
-                    switch (btn.Name)
-                    {
-                        case "BtnAns1":
-                            selectedAnswer = 1;
-                            modAnswer = 1;
-                            break;
-                        case "BtnAns2":
-                            selectedAnswer = 2;
-                            modAnswer = 2;
-                            break;
-                        case "BtnAns3":
-                            selectedAnswer = 3;
-                            modAnswer = 3;
-                            break;
-                        case "BtnAns4":
-                            selectedAnswer = 4;
-                            modAnswer = 4;
-                            break;
-                    }
-                }   
+                    modAnswer = selectedAnswer;
+                    modAnswer2 = selectedAnswer;
+                }
+
 
                 // submit answer to database
                 // 回答をデータベースに送信する
@@ -160,12 +151,12 @@ namespace StressCheck
                                         INSERT (YEAR, EMP_ID, Q_CATEGORY, Q_NO, ANSWER, MOD_ANSWER, MOD_ANSWER_2)
                                         VALUES (YEAR, EMP_ID, Q_CATEGORY, Q_NO, ANSWER, MOD_ANSWER, MOD_ANSWER_2);";
                 sql.Parameters.AddWithValue("@YEAR", Viewport.CurrentYear); // ADD YEAR FROM SQL SERVER?
-                sql.Parameters.AddWithValue("@EMP_ID", Viewport.CurrentUser);
+                sql.Parameters.AddWithValue("@EMP_ID", Viewport.CurrentUserID);
                 sql.Parameters.AddWithValue("@Q_CATEGORY", Viewport.CurrentQuestionCategory);
-                sql.Parameters.AddWithValue("@Q_NO", Viewport.CurrentQuestion +1);
+                sql.Parameters.AddWithValue("@Q_NO", Viewport.CurrentQuestion + 1);
                 sql.Parameters.AddWithValue("@ANSWER", selectedAnswer);
                 sql.Parameters.AddWithValue(@"MOD_ANSWER", modAnswer);
-                sql.Parameters.AddWithValue(@"MOD_ANSWER_2", 0); // PLACEHOLDER ---- ADD LATER
+                sql.Parameters.AddWithValue(@"MOD_ANSWER_2", modAnswer2);
 
                 // if answer submitted successfully, move to next question
                 // 問題なく提出された場合、次の質問に移動

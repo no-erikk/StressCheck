@@ -8,6 +8,8 @@ namespace StressCheck
         public event EventHandler PrevQuestion;
         public event EventHandler ReturnToTitle;
 
+        public event EventHandler DEBUGGoToResults;
+
         private readonly Viewport Viewport;
 
 
@@ -29,7 +31,7 @@ namespace StressCheck
         private void GetSectionTitle()
         {
             using var sql = RDB.Connection.CreateCommand();
-            sql.CommandText = @"SELECT T.TITLE, T.Q_CATEGORY, Q.Q_NO, Q.Q_TEXT, T.ANSWER_1, T.ANSWER_2, T.ANSWER_3, T.ANSWER_4, Q.REV, S.SUBTITLE
+            sql.CommandText = @"SELECT T.TITLE, T.Q_CATEGORY, Q.Q_NO, Q.Q_TEXT, T.ANSWER_1, T.ANSWER_2, T.ANSWER_3, T.ANSWER_4, Q.REV, Q.REV_2, S.SUBTITLE
                                 FROM QUESTION_TITLE AS T
                                 LEFT JOIN QUESTION AS Q ON T.Q_CATEGORY = Q.Q_CATEGORY
                                 LEFT JOIN QUESTION_SUBTITLE AS S ON Q.Q_CATEGORY = S.Q_CATEGORY AND Q.Q_NO = S.Q_NO
@@ -86,8 +88,15 @@ namespace StressCheck
             }
             else
             {
-                ReturnToTitle?.Invoke(sender, EventArgs.Empty );
+                ReturnToTitle?.Invoke(sender, EventArgs.Empty);
             }
+        }
+
+        // debug -- skip to result page
+        // 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            DEBUGGoToResults?.Invoke(sender, EventArgs.Empty);
         }
     }
 }

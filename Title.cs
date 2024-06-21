@@ -13,6 +13,10 @@
             InitializeComponent();
             Viewport = viewport;
             ActiveControl = FrmEmpID;
+
+            // set current year in viewport
+            // 現在の年をビューポートに設定
+            Viewport.CurrentYear = DateTime.Now.Year.ToString();
         }
 
         private void CheckLogin() // TO DO ---- add to query: check ID, Year against ANSWER table to see what the last question answered was
@@ -30,29 +34,26 @@
                 sql.Parameters.AddWithValue("@PASSWD", FrmEmpPass.Text);
 
                 using var reader = sql.ExecuteReader();
-                if (reader.Read())
+                if (reader.HasRows)
                 {
-                    // set current user ID in viewport
-                    // 現在のユーザーIDをビューポートに設定
-                    Viewport.CurrentUser = (string)reader["EMP_ID"];
-                    var userName = (string)reader["EMP_NAME"];
+                    while (reader.Read())
+                    {
+                        // set current user info in viewport
+                        // 現在のユーザー情報をビューポートに設定
+                        Viewport.CurrentUserID = (string)reader["EMP_ID"];
+                        Viewport.CurrentUserName = (string)reader["EMP_NAME"];
+                    }
 
-                    // set current year in viewport
-                    // 現在の年をビューポートに設定
-                    Viewport.CurrentYear = DateTime.Now.Year.ToString();
-
-                    MessageBox.Show(userName + "としてログインしました。", "ログイン成功");
+                    MessageBox.Show(Viewport.CurrentUserName + "としてログインしました。", "ログイン成功");
                 }
                 else
                 {
                     MessageBox.Show("従業員IDとパスワードを確認して下さい。", "エラー");
                 }
-
-                
             }
             catch
             {
-
+                MessageBox.Show("従業員IDとパスワードを確認して下さい。", "エラー");
             }
         }
 
@@ -65,7 +66,7 @@
                 CheckLogin();
                 // check for active user, if found move to next screen
                 // 現在のユーザーを検索し、見つかったら次の画面に移動
-                if(Viewport.CurrentUser != null)
+                if(Viewport.CurrentUserID != null)
                 {
                     NextScreen?.Invoke(sender, EventArgs.Empty);
                 }
