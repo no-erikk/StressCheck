@@ -17,6 +17,8 @@ namespace StressCheck
 
         private void Result_Load(object sender, EventArgs e)
         {
+            // resize window to show full results page
+            // 結果ページを表示するためにウィンドウをリサイズ
             Viewport.Size = new Size(this.Width + 22, this.Height + 56);
 
             // initialize list of labels to use for results display
@@ -105,6 +107,8 @@ namespace StressCheck
                     int dataIndex = chartName.Series["Series1"].Points.Count - 1;
                     chartName.Series["Series1"].Points[dataIndex].AxisLabel = (string)reader["FACTOR_TEXT"];
 
+                    // set label text and value on lefthand side
+                    // 左側にラベルの文字と値を設定
                     labels[labelIndex].Text = labelText + "：" + value;
                     labelIndex++;
 

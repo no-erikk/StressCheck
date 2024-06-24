@@ -66,7 +66,7 @@
                 CheckLogin();
                 // check for active user, if found move to next screen
                 // 現在のユーザーを検索し、見つかったら次の画面に移動
-                if(Viewport.CurrentUserID != null)
+                if (Viewport.CurrentUserID != null)
                 {
                     NextScreen?.Invoke(sender, EventArgs.Empty);
                 }

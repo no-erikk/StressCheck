@@ -1,6 +1,4 @@
-﻿using System.Data;
-
-namespace StressCheck
+﻿namespace StressCheck
 {
     public partial class SectionTitle : UserControl
     {
