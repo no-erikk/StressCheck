@@ -22,7 +22,7 @@ WITH FactorSums AS (
 		E.GENDER,
 		A.Q_CATEGORY,
 		F.FACTOR,
-		SUM(CASE WHEN Q.REV_2 = 1 THEN A.MOD_ANSWER_2 ELSE A.MOD_ANSWER END) AS factor_total,
+		SUM(A.MOD_ANSWER) AS factor_total,
 		F.FACTOR_TEXT
 	FROM ANSWER A
 	LEFT JOIN QUESTION Q ON A.Q_CATEGORY = Q.Q_CATEGORY AND A.Q_NO = Q.Q_NO
@@ -46,7 +46,13 @@ SELECT
 						WHEN factor_total BETWEEN 6 AND 7 THEN 4
 						WHEN factor_total BETWEEN 3 AND 5 THEN 5
 						END
-				WHEN FACTOR IN (13, 15) THEN factor_total -- 自覚的な身体的負担 / 職場環境によるストレス
+				WHEN FACTOR IN (13, 15) THEN -- 自覚的な身体的負担 / 職場環境によるストレス
+					CASE
+						WHEN factor_total = 4 THEN 1
+						WHEN factor_total = 3 THEN 2
+						WHEN factor_total = 2 THEN 3
+						WHEN factor_total = 1 THEN 4
+						END
 				WHEN FACTOR IN (14) THEN -- 職場の対人関係でのストレス
 					CASE 
 						WHEN factor_total BETWEEN 10 AND 12 THEN 1
