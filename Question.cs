@@ -26,7 +26,6 @@ namespace StressCheck
         private void Question_Load(object sender, EventArgs e)
         {
             GetQuestion(Viewport.CurrentQuestion);
-            PrgQuestions.Maximum = Viewport.questions.Rows.Count;
         }
 
         // get next question
@@ -51,10 +50,9 @@ namespace StressCheck
                 TxtQuestion.TextAlign = ContentAlignment.MiddleCenter;
                 TxtQuestionSubtitle.TextAlign = ContentAlignment.MiddleCenter;
 
-                // update progress bar
-                // 進捗バーを更新
-                PrgQuestions.Value = questionIndex + 1;
-                PrgQuestions.Refresh();
+                // show current question number
+                // 現在の質問の番号を表す
+                LblProgress.Text = $"{questionIndex + 1}/{Viewport.questions.Rows.Count}";
             }
             else if (questionIndex >= Viewport.questions.Rows.Count)
             {
@@ -124,20 +122,30 @@ namespace StressCheck
                 // REVとREV_2をチェックし、modAnswerとmodAnswer2に割り当てる
                 if (Viewport.questions.Rows[Viewport.CurrentQuestion]["REV"].Equals(true))
                 {
-                    modAnswer = 5 - selectedAnswer;
-                    modAnswer2 = selectedAnswer;
-                }
-                else if (Viewport.questions.Rows[Viewport.CurrentQuestion]["REV_2"].Equals(true))
-                {
-                    modAnswer = selectedAnswer;
-                    modAnswer2 = 5 - selectedAnswer;
+                    if (Viewport.questions.Rows[Viewport.CurrentQuestion]["REV_2"].Equals(true)) // REV & REV_2 TRUE
+                    {
+                        modAnswer = selectedAnswer;
+                        modAnswer2 = 5 - selectedAnswer;
+                    }
+                    else // REV TRUE & REV_2 FALSE
+                    {
+                        modAnswer = 5 - selectedAnswer;
+                        modAnswer2 = selectedAnswer;
+                    }
                 }
                 else
                 {
-                    modAnswer = selectedAnswer;
-                    modAnswer2 = selectedAnswer;
+                    if (Viewport.questions.Rows[Viewport.CurrentQuestion]["REV_2"].Equals(true)) // REV FALSE & REV_2 TRUE
+                    {
+                        modAnswer = selectedAnswer;
+                        modAnswer2 = 5 - selectedAnswer;
+                    }
+                    else // REV & REV_2 FALSE
+                    {
+                        modAnswer = selectedAnswer;
+                        modAnswer2 = selectedAnswer;
+                    }
                 }
-
 
                 // submit answer to database
                 // 回答をデータベースに送信する
@@ -184,11 +192,6 @@ namespace StressCheck
             {
                 Viewport.CurrentQuestion--;
                 GetQuestion(Viewport.CurrentQuestion);
-
-                // update progress bar backwards
-                // 進捗ボタンを逆に更新
-                PrgQuestions.Value = Viewport.CurrentQuestion;
-                PrgQuestions.Refresh();
             }
             // if it's the first question, return to previous screen
             // 最初の質問なら、前の画面に戻る

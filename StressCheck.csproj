@@ -15,7 +15,7 @@
 
   <ItemGroup>
     <None Update="GetResults.sql">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 

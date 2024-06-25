@@ -39,7 +39,7 @@
             BtnSkip_DEBUG = new Button();
             TxtSectionName = new Label();
             TxtSectionCategory = new Label();
-            PrgQuestions = new ProgressBar();
+            LblProgress = new Label();
             SuspendLayout();
             // 
             // TxtQuestion
@@ -57,10 +57,10 @@
             // TxtQuestionSubtitle
             // 
             TxtQuestionSubtitle.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            TxtQuestionSubtitle.Location = new Point(3, 233);
+            TxtQuestionSubtitle.Location = new Point(3, 197);
             TxtQuestionSubtitle.Name = "TxtQuestionSubtitle";
             TxtQuestionSubtitle.Padding = new Padding(10, 0, 10, 0);
-            TxtQuestionSubtitle.Size = new Size(897, 95);
+            TxtQuestionSubtitle.Size = new Size(897, 39);
             TxtQuestionSubtitle.TabIndex = 1;
             TxtQuestionSubtitle.Text = "Question Subtitle";
             TxtQuestionSubtitle.TextAlign = ContentAlignment.MiddleCenter;
@@ -155,20 +155,22 @@
             TxtSectionCategory.TabIndex = 10;
             TxtSectionCategory.Text = "セクションA：";
             // 
-            // PrgQuestions
+            // LblProgress
             // 
-            PrgQuestions.Location = new Point(696, 3);
-            PrgQuestions.Name = "PrgQuestions";
-            PrgQuestions.Size = new Size(201, 22);
-            PrgQuestions.Step = 1;
-            PrgQuestions.Style = ProgressBarStyle.Continuous;
-            PrgQuestions.TabIndex = 11;
+            LblProgress.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            LblProgress.AutoSize = true;
+            LblProgress.Location = new Point(845, 4);
+            LblProgress.Name = "LblProgress";
+            LblProgress.Size = new Size(51, 25);
+            LblProgress.TabIndex = 12;
+            LblProgress.Text = "??/??";
+            LblProgress.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // Question
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            Controls.Add(PrgQuestions);
+            Controls.Add(LblProgress);
             Controls.Add(TxtSectionCategory);
             Controls.Add(TxtSectionName);
             Controls.Add(BtnSkip_DEBUG);
@@ -199,6 +201,6 @@
         private Button BtnSkip_DEBUG;
         private Label TxtSectionName;
         private Label TxtSectionCategory;
-        private ProgressBar PrgQuestions;
+        private Label LblProgress;
     }
 }
