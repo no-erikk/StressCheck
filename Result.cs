@@ -95,6 +95,7 @@ namespace StressCheck
                             chartName = ChartC;
                             break;
                     }
+
                     // distribute data between charts based on category
                     // カテログリごとにデータをグラフに配分
                     int factor = Convert.ToInt32(reader["FACTOR"]);
@@ -111,7 +112,6 @@ namespace StressCheck
                     // 左側にラベルの文字と値を設定
                     labels[labelIndex].Text = labelText + "：" + value;
                     labelIndex++;
-
                 }
             }
         }

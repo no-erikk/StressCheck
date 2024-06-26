@@ -43,7 +43,6 @@
                         Viewport.CurrentUserID = (string)reader["EMP_ID"];
                         Viewport.CurrentUserName = (string)reader["EMP_NAME"];
                     }
-
                     MessageBox.Show(Viewport.CurrentUserName + "としてログインしました。", "ログイン成功");
                 }
                 else
